@@ -1,14 +1,26 @@
+# .github/workflows/release.yml
 name: Create Release on Tag
+
+# Trigger only when a tag starting with "v" is pushed
 on:
   push:
     tags:
       - 'v*'
 
+# Grant the built-in token rights to create releases and manipulate repo contents
+permissions:
+  contents: write
+
 jobs:
   release:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      # 1. Check out the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Create or update the GitHub Release for the pushed tag
       - name: Create Release
         uses: actions/create-release@v1
         env:
